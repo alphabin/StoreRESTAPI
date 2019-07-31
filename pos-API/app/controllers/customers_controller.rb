@@ -2,15 +2,17 @@ class CustomersController < ApplicationController
   before_action :get_customer, only: [:show]
 
   def index
+    if params['id'].present?
+      @customer= Customer.where(:id => params['id'])
+      render(json: @customer , status: 200 )
+    elsif params['email'].present?
+      @customer= Customer.where(:email => params['email'])
+      render(json: @customer , status: 200 )
+    end
   end
 
 
   def show
-    if params['id'].present?
-      @customer= Customer.where(:id => params['id'])
-    elsif params['email'].present?
-      @customer= Customer.where(:email => params['email'])
-    end
   end
 
  

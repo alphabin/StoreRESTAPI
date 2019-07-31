@@ -19,7 +19,15 @@ loop do
       puts JSON.parse(response.body)
       
   elsif answer == "email" 
+      puts "enter email"
+      userEmail = gets.chomp  
+      response = Foo.get(base_url+"?email="+userEmail)
+      puts JSON.parse(response.body)
   elsif answer == "id" 
+      puts "enter id"
+      userID = gets.chomp  
+      response = Foo.get(base_url+"?id="+userID)
+      puts JSON.parse(response.body)
   elsif answer == "quit" 
       break   
   end   
