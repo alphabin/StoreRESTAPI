@@ -25,7 +25,9 @@ class CustomersController < ApplicationController
   end
 
   def order
-  
+     incomingOrder = order_params
+     orderId = incomingOrder["id"] 
+     
   end
   
  
@@ -65,7 +67,7 @@ class CustomersController < ApplicationController
     end
     
     def order_params
-      params.require(:id).require(:itemId).require(:description).require(:customerId)
-      .require(:price).require(:award).require(:total)
+      params.require(:order).permit(:id).permit(:itemId).permit(:description).permit(:customerId)
+      .permit(:price).permit(:award).permit(:total)
     end
 end
