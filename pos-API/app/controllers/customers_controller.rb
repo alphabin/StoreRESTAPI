@@ -32,40 +32,41 @@ class CustomersController < ApplicationController
      customerId = incomingOrder["customerId"].to_i
      awordAmmount = incomingOrder["award"].to_i
      itemPrice = incomingOrder["price"].to_s
-     lastOrder =  incomingOrder["lastOrder"].to_f 
-     lastOrder2 = incomingOrder["lastOrder2"].to_f 
-     lastOrder3 = incomingOrder["lastOrder3"].to_f 
      
      if awordAmmount.nil?
         awordAmmount = 0
      end
  
      @customer= Customer.where(:id =>  customerId.to_s).first
-     puts "first GO " + @customer.to_json
      
+     lastOrder =  @customer["lastOrder"].to_f 
+     lastOrder2 = @customer["lastOrder2"].to_f 
+     lastOrder3 = @customer["lastOrder3"].to_f 
      if(@customer != nil)
         if(awordAmmount > 0)
-            puts "zero it out"
+            
             @customer["lastOrder"] = nil
             @customer["lastOrder2"] = nil
             @customer["lastOrder3"] = nil
         elsif (awordAmmount == 0 || awordAmmount == nil)
             if( lastOrder == 0.0 )
               @customer["lastOrder"] = itemPrice
-              puts "loaded value to l1" 
+              
             elsif( lastOrder2== 0.0)
               @customer["lastOrder2"] = itemPrice
-               puts "loaded value to l2" 
+             
             elsif( lastOrder3 ==0.0)
                @customer["lastOrder3"] = itemPrice
-              puts "loaded value to l3" 
+             
             end
             
-            puts "second GO " + @customer.to_json
-            
+                  
+             lastOrder =  @customer["lastOrder"].to_f 
+             lastOrder2 = @customer["lastOrder2"].to_f 
+             lastOrder3 = @customer["lastOrder3"].to_f 
 
             
-            if(  lastOrder != nil && lastOrder2  != nil && lastOrder3  != nil)
+            if(  lastOrder > 0 && lastOrder2 > 0 && lastOrder3  > 0)
                 itemTotal =  lastOrder  + lastOrder2  + lastOrder3
                 award = (itemTotal/3.0)*(0.10)
                 @customer["award"] = award 

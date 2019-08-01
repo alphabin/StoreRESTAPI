@@ -37,15 +37,41 @@ RSpec.describe "Customer Status", type: :request do
   describe "POST /customer/order" do
     it 'make an order' do
       headers = { "ACCEPT" => "application/json"} 
-      orderSend = {order:{id: '420', itemId: '23', description: 'Balls', customerId: '1',price:10.30, award:0.0, total:10.30}}
+      orderSend = {order:{id: '420', itemId: '23', description: 'Balls', customerId: '1',price:100.00, award:0.0, total:10.30}}
       post '/customers/order',  params: orderSend, headers: headers
       expect(response).to have_http_status(200)
       json_response = JSON.parse(response.body) 
-      expect(json_response.length).to eq 1
-      customer = json_response[0]
+      expect(json_response.length).to eq 10
+      customer = json_response
       expect(customer['firstName']).to eq 'chatura'
       expect(customer['lastName']).to eq 'ahangama'
       expect(customer['email']).to eq 'chaturadroid@gmail.com'
+       expect(customer['lastOrder']).to eq "100.0"
+      expect(customer['award']).to eq nil
+      
+      orderSend = {order:{id: '420', itemId: '23', description: 'Balls', customerId: '1',price:200.00, award:0.0, total:10.30}}
+      post '/customers/order',  params: orderSend, headers: headers
+      expect(response).to have_http_status(200)
+      json_response = JSON.parse(response.body) 
+      expect(json_response.length).to eq 10
+      customer = json_response
+      expect(customer['firstName']).to eq 'chatura'
+      expect(customer['lastName']).to eq 'ahangama'
+      expect(customer['email']).to eq 'chaturadroid@gmail.com'
+      expect(customer['lastOrder2']).to eq "200.0"
+      expect(customer['award']).to eq nil
+      
+      orderSend = {order:{id: '420', itemId: '23', description: 'Balls', customerId: '1',price:175.00, award:0.0, total:10.30}}
+      post '/customers/order',  params: orderSend, headers: headers
+      expect(response).to have_http_status(200)
+      json_response = JSON.parse(response.body) 
+      expect(json_response.length).to eq 10
+      customer = json_response
+      expect(customer['firstName']).to eq 'chatura'
+      expect(customer['lastName']).to eq 'ahangama'
+      expect(customer['email']).to eq 'chaturadroid@gmail.com'
+      expect(customer['lastOrder3']).to eq "175.0"
+      expect(customer['award']).to eq "15.8333333333333"
     end 
   end
   
