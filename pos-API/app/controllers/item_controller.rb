@@ -1,4 +1,4 @@
- class Item_Subsystem
+class ItemsController < ApplicationController
   def new_Item	
     @item = Item.new
     update(@item) 
@@ -43,7 +43,7 @@
       @item.save
       head 204
     else
-      render(json: {messages: [ {:id => ['Item not in stock'] }  ] }, status: 400 )
+      render(json: {messages: [ {:id => ['Not Found'] }  ] }, status: 400 )
     end 
   end 
 	
