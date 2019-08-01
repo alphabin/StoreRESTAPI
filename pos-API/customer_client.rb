@@ -1,6 +1,7 @@
 require 'httparty'
 
 base_url = "http://localhost:8080/customers"
+base_url2 = "http://localhost:8080/customers/order"
 class Foo
   include HTTParty
 end
@@ -27,6 +28,10 @@ loop do
       puts "enter id"
       userID = gets.chomp  
       response = Foo.get(base_url+"?id="+userID)
+      puts JSON.parse(response.body)
+  elsif answer == "ST" 
+      puts "orderTest"
+      response =Foo.post(base_url2 , body: {order:{id: '420', itemId: '23', description: 'Balls', customerId: '1',price:10.30, award:0.0, total:10.30}})
       puts JSON.parse(response.body)
   elsif answer == "quit" 
       break   
