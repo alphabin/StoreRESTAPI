@@ -2,22 +2,23 @@ require 'httparty'
 
 class ItemClient 
   include HTTParty
-    base_uri "http://localhost:8080/item"
+    base_uri "http://localhost:8080/items"
 	format :json
  
  
   def self.new_Item(item) 
-    post '/items', body: item.to_json, 
-         headers:  { 'Content-Type' => 'application/json', 'ACCEPT' => 'application/json' }
+      response =post(base_uri, body: item)
+      puts JSON.parse(response.body)
   end 
   
   def self.update_Item(item)
-     put "/items/#{item[:id]}", body: item.to_json, 
-         headers:  { 'Content-Type' => 'application/json', 'ACCEPT' => 'application/json' }
+      response =put(base_uri, body: item)
+      puts JSON.parse(response.body)
   end
   
   def self.getId(id)
-    get "/items/#{id}" 
+      response = get(base_uri+"/"+id)
+      puts JSON.parse(response.body)
   end
   
 end 
@@ -37,7 +38,6 @@ while true
       puts 'enter item stockQty'
       stockQty = gets.chomp!
       response = ItemClient.new_Item description: description, price: price, stockQty: stockQty
-      puts "status code #{response.code}"
       puts response.body 
       puts 
     when 'update_Item'
@@ -49,16 +49,12 @@ while true
       price = gets.chomp!
       puts 'enter  stockQty'
       stockQty = gets.chomp!
-      response = ItemClient.update_Item  id: id, description: description, price: price, stockQty: stockQty
-      puts "status code #{response.code}"
-      puts response.body 
+      response = ItemClient.update_Item  item: {id: id, description: description, price: price, stockQty: stockQty}
       puts 
     when 'get'
       puts 'enter id of item to lookup'
       id = gets.chomp!
       response = ItemClient.getId(id)
-      puts "status code #{response.code}"
-      puts response.body 
       puts
     else 
       puts "I don't understand.  Try again."
