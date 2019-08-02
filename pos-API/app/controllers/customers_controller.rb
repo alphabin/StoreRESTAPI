@@ -30,7 +30,7 @@ class CustomersController < ApplicationController
      incomingOrder = order_params
      orderId = incomingOrder["id"].to_i
      customerId = incomingOrder["customerId"].to_i
-     awordAmmount = incomingOrder["award"].to_i
+     awordAmmount = incomingOrder["award"].to_f
      itemPrice = incomingOrder["price"].to_s
      
      if awordAmmount.nil?
