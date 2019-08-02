@@ -28,7 +28,7 @@ def update
 end
 
   def order_Item
-    @item = Item.find_by(:id => params[:itemId])
+    @item = Item.find(item_params[:id])
     if @item.nil?
        head 404
        return

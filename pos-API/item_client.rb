@@ -38,7 +38,6 @@ while true
       puts 'enter item stockQty'
       stockQty = gets.chomp!
       response = ItemClient.new_Item itemNew: {description: description, price: price, stockQty: stockQty}
-      puts response.body 
       puts 
     when 'update_Item'
       puts 'enter id of item to update'
