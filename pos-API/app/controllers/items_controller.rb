@@ -1,8 +1,7 @@
 class ItemsController < ApplicationController
   def create	
-    @item = Item.new
-    update(@item) 
-   respond_to do |format|
+    @item = Item.new(new_params)
+    respond_to do |format|
       if @item.save
         format.json { render json: @item, status: 201 }
       else
@@ -48,4 +47,7 @@ private
          params.require(:item).permit(:id, :description, :price, :stockQty)
      end
 
+    def new_params
+      params.require(:itemNew).permit(:description, :price, :stockQty)
+    end
 end
